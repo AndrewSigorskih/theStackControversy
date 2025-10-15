@@ -45,7 +45,7 @@ namespace Containers
 		void removeNode(_rbNode*);
         void copy(const rbTree&);
     private:
-        _rbNode* _root;
-        size_t _size;
+        _rbNode* _root = nullptr;
+        size_t _size = 0;
     };
 }

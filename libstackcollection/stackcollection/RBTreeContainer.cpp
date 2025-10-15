@@ -13,11 +13,7 @@ namespace Containers
     rbTree::rbTree(const rbTree& other)
     {
         if (other.empty())
-        {
-            _root = nullptr;
-            _size = 0;
             return;
-        }
 
         this->copy(other);
     }
@@ -46,20 +42,32 @@ namespace Containers
         node->data = val;
 
         if (_root == nullptr) {
+            _size++;
             _root = node;
             node->color = Color::BLACK;
             return;
         }
 
         _rbNode* curr = _root;
-        while ((curr->left != nullptr) | (curr->right != nullptr))
+        while (true)
         {
-            if (key < curr->key)
-                curr = curr->left;
-            else
-                curr = curr->right;
+            if (key == curr->key)
+            {
+                curr->data = val;
+                return;
+            } else if (key < curr->key) {
+                if (curr->left)
+                    curr = curr->left;
+                else
+                    break;
+            } else {
+                if (curr->right)
+                    curr = curr->right;
+                else
+                    break;
+            }
         }
-
+        _size++;
         node->parent = curr;
         if (key < curr->key)
             curr->left = node;
@@ -113,14 +121,12 @@ namespace Containers
 
             _root->color = Color::BLACK;
         }
-        
-        _size++;
     }
 
     std::optional<int> rbTree::pop(ssize_t key)
     {
         if (this->empty())
-            throw std::runtime_error("Trying to pop from an empty rbTree!");
+            return std::nullopt;
 
         auto curr = _root;
         while ((curr->left != nullptr) || (curr->right != nullptr))
@@ -146,7 +152,7 @@ namespace Containers
     std::optional<const int*> rbTree::search(ssize_t key) const
     {
         if (this->empty())
-            throw std::runtime_error("Trying to search an empty rbTree!");
+            return std::nullopt;
 
         auto curr = _root;
         while ((curr->left != nullptr) || (curr->right != nullptr))

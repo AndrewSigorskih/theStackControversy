@@ -12,18 +12,27 @@ int RBTreeStack::pop()
     auto result = _tree.pop(_last_key_added);
     _last_key_added--;
     if (result.has_value())
+    {
         return result.value();
-    else
-        throw std::runtime_error("Unexpected error occurew when trying to pop from an instance of RBTreeStack!");
+    } else {
+        if (_tree.empty())
+            throw std::out_of_range("Trying to pop from an empty instance of RBTreeStack!");
+        throw std::runtime_error("Unexpected error occured when trying to pop from an instance of RBTreeStack!");
+    }
+        
 }
 
 const int& RBTreeStack::top() const
 {
     auto result = _tree.search(_last_key_added);
     if (result.has_value())
+    {
         return *(result.value());
-    else
+    } else {
+        if (_tree.empty())
+            throw std::out_of_range("Trying to access an element of an empty instance of RBTreeStack!");
         throw std::runtime_error("Unexpected error occured when trying to search an instance of RBTreeStack!");
+    }  
 }
 
 size_t RBTreeStack::size() const
