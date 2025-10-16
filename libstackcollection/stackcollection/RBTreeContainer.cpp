@@ -129,23 +129,24 @@ namespace Containers
             return std::nullopt;
 
         auto curr = _root;
-        while ((curr->left != nullptr) || (curr->right != nullptr))
+        while (true)
         {
+            if (!curr)
+                return std::nullopt;
             if (curr->key == key)
+            {
                 break;
-            
-            if (key > curr->key)
+            } else if (key > curr->key) {
                 curr = curr->right;
-            else
+            } else {
                 curr = curr->left;
+            }
         }
-
-        if (curr->key != key)
-            return std::nullopt;
         
         auto result = std::make_optional<int>(curr->data);
         this->removeNode(curr);
-        _size--;
+        if (_size > 0)
+            _size--;
         return result;
     }
 
@@ -155,19 +156,19 @@ namespace Containers
             return std::nullopt;
 
         auto curr = _root;
-        while ((curr->left != nullptr) || (curr->right != nullptr))
+        while (true)
         {
+            if (!curr)
+                return std::nullopt;
             if (curr->key == key)
+            {
                 break;
-            
-            if (key > curr->key)
+            } else if (key > curr->key) {
                 curr = curr->right;
-            else
+            } else {
                 curr = curr->left;
+            }
         }
-
-        if (curr->key != key)
-            return std::nullopt;
         
         return std::make_optional<const int*>(&(curr->data));
     }

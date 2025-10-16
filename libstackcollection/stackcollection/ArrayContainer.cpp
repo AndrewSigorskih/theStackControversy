@@ -168,6 +168,7 @@ namespace Containers
         delete[] _data;
         _data = new_data;
         _capacity = new_capacity;
-        _size = new_capacity;
+        if (_size > new_capacity)
+            _size = new_capacity;
     }
 }
