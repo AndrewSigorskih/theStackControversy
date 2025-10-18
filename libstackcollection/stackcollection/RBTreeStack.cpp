@@ -10,9 +10,9 @@ void RBTreeStack::push(int data)
 int RBTreeStack::pop()
 {
     auto result = _tree.pop(_last_key_added);
-    _last_key_added--;
     if (result.has_value())
     {
+        _last_key_added--;
         return result.value();
     } else {
         if (_tree.empty())

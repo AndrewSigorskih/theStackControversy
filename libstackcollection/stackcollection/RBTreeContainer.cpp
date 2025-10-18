@@ -1,4 +1,5 @@
 #include "RBTreeContainer.hpp"
+#include <iostream>
 
 namespace Containers
 {
@@ -125,6 +126,7 @@ namespace Containers
 
     std::optional<int> rbTree::pop(ssize_t key)
     {
+        std::cerr <<"Popping " << key << '\n';
         if (this->empty())
             return std::nullopt;
 
@@ -322,12 +324,14 @@ namespace Containers
                     }
                 }
 
-                if ((node->parent->left == nullptr)
-                     && (node->parent->right == nullptr)
-                     && (node->parent->parent != nullptr))
-                {
-                    rightRotate(node->parent->parent);
-                }
+                // if ((node->parent->left == nullptr)
+                //      && (node->parent->right == nullptr)
+                //      && (node->parent->parent != nullptr)
+                //      && (node->parent->parent->left != nullptr)) // TMP
+                // {
+                //     std::cerr << "grandparent rotation\n";
+                //     rightRotate(node->parent->parent);
+                // }
 
                 delete node;
             }
